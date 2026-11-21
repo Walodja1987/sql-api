@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Response
 from pydantic import BaseModel, Field
 from mssql_python import connect
+from pathlib import Path
+from fastapi.responses import FileResponse
 
 load_dotenv()
 
@@ -183,3 +185,12 @@ def delete_customer(customer_id: int):
         conn.commit()
 
     return Response(status_code=204)
+
+# -----------------------------
+# Frontend
+# -----------------------------
+
+@app.get("/app", include_in_schema=False)
+def customer_app():
+    html_file = Path(__file__).resolve().parent / "frontend" / "index.html"
+    return FileResponse(html_file)
