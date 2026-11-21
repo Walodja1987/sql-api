@@ -1,22 +1,24 @@
+import os
 from fastapi import FastAPI
+from dotenv import load_dotenv
 from mssql_python import connect
 
-app = FastAPI()
+load_dotenv()
 
-CONNECTION_STRING = (
-    "Server=localhost\\SQLEXPRESS;"
-    "Database=TestDB;"
-    "Trusted_Connection=yes;"
-    "Encrypt=yes;"
-    "TrustServerCertificate=yes;"
-)
+app = FastAPI(title="SQL API")
+
+
+@app.get("/")
+def home():
+    return {"message": "SQL API is running"}
 
 
 @app.get("/api/customers")
 def get_customers():
 
-    with connect(CONNECTION_STRING) as conn:
+    connection_string = os.environ["SQL_CONNECTION_STRING"]
 
+    with connect(connection_string) as conn:
         cursor = conn.cursor()
 
         cursor.execute("""
@@ -25,20 +27,18 @@ def get_customers():
                 FirstName,
                 LastName,
                 Email
-            FROM Customers
+            FROM dbo.Customers
             ORDER BY CustomerId
         """)
 
         rows = cursor.fetchall()
 
-        customers = []
-
-        for row in rows:
-            customers.append({
+        return [
+            {
                 "CustomerId": row[0],
                 "FirstName": row[1],
                 "LastName": row[2],
                 "Email": row[3]
-            })
-
-        return customers
+            }
+            for row in rows
+        ]

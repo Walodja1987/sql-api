@@ -1,0 +1,13 @@
+USE master;
+GO
+
+CREATE LOGIN sqlapi
+WITH PASSWORD = 'SOME_STRONG_PASSWORD';
+GO
+
+USE TestDB;
+GO
+
+CREATE USER sqlapi FOR LOGIN sqlapi;
+ALTER ROLE db_datareader ADD MEMBER sqlapi;
+GO
