@@ -1,0 +1,7 @@
+USE TestDB;
+GO
+
+GRANT INSERT, UPDATE, DELETE
+ON OBJECT::dbo.Customers
+TO sqlapi;
+GO
