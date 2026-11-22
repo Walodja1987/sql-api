@@ -2,7 +2,7 @@
 
 FastAPI CRUD API for SQL Server `dbo.Customers`, plus a simple frontend.
 
-Full home-lab walkthrough (SQL Server, SSMS, WSL, migrations): [guide/sql_server_guide.html](guide/sql_server_guide.html)
+Full home-lab walkthrough (SQL Server, SSMS, WSL, migrations): [SQL Server guide](https://walodja1987.github.io/sql-api/guide/sql_server_guide.html)
 
 ## Setup
 
